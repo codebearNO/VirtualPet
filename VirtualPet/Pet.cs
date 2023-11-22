@@ -10,9 +10,11 @@ namespace VirtualPet
     {
         public string Name { get;  }
         public int Age { get; set; }
-        public bool Hungry = true;
+        public bool Hungry;
         public double Cuddle = 50;
         public double CuddleRate = 0;
+        public static bool gameRunning = true;
+        public bool FullBladder = true;
 
 
         public Pet(string name, int age, double cuddleRate)
@@ -20,11 +22,13 @@ namespace VirtualPet
             Name = name;
             Age = age;
             CuddleRate = cuddleRate;
-        }
+            Hungry = true;
+    }
         public void Feed()
         {
             Console.WriteLine($"You fed {Name}");
             Hungry = false;
+            FullBladder = true;
         }
 
         public void AgePet()
@@ -34,7 +38,8 @@ namespace VirtualPet
 
         public void Toilet()
         {
-            // Bladder = empty
+            FullBladder = false;
+            Console.WriteLine($"You went to the toilet with {Name}");
             Hungry = true;
         }
         
@@ -54,9 +59,21 @@ namespace VirtualPet
 
         public void CuddlePet()
         {
+            Console.WriteLine($"You cuddle {Name}");
+
             Cuddle += 25;
+
         }
 
+        public string StatusPet()
+        {
+            string a = $"{Name} er {Age} år gammel";
+            string h = Hungry ? $"{Name} er sulten" : $"{Name} er mett";
+            string c = Cuddle < 50 ? $"{Name} vil ha kos" : $"{Name} vil ha alenetid";
+            string t = FullBladder ? $"{Name} må på do" : $"{Name} trenger ikke å gå på do akkurat nå";
+
+            return a + "\n" + h + "\n" + c + "\n" + t;
+        }
 
     }
 }
